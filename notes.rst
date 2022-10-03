@@ -139,3 +139,19 @@ Main Challenges
 
 If you make absolutely no assumption about the data, then there is no reason to prefer one model over any other.
 
+==================
+End-to-End Example
+==================
+
+Main steps
+==========
+
+ 1. Frame the problem and look at the big picture
+ 2. Get the data
+ 3. Explore the data to get insights
+ 4. Prepare the data for ML algorithms
+ 5. Explore many different models and shortlist the best ones
+ 6. Fine-tune your models
+ 7. Present your solution
+ 8. Launch, monitor, and maintain your system
+
