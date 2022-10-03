@@ -13,12 +13,14 @@ Why
 ===
 
 ML is great for:
+
 - Problems for which existing solutions require a lot of fine-tuning or long list of rules;
 - Complex problems for which using traditional approach yields no good solution;
 - Fluctuating environment: a ML system can adapt to new data;
 - Getting insights about complex problems and large amount of data.
 
 Examples of applications:
+
 - Analyzing images of products
 - Detecting tumors in brain scans
 - Automatically classifying new articles
@@ -43,6 +45,7 @@ Types
 
 **Supervised**
 The training set includes the desired solutions, called labels (classification and regression).
+
 - k-Nearest Neighbors 
 - Linear Regression
 - Logistic Regression
@@ -53,6 +56,7 @@ The training set includes the desired solutions, called labels (classification a
 
 **Unsupervised**
 The training set is unlabeled.
+
 - Clustering (detecting groups of similar datapoints):
   - K-Means
   - DBSCAN
@@ -65,12 +69,15 @@ The training set is unlabeled.
   - Kernel PCA
   - Locally Linear Embedding (LLE)
   - t-Distributed Stochastic Neighbor Embedding (t-SNE)
+
 Assosiation rule learning (discovering hidden relations between data attributes):
+
   - Apriori
   - Eclat
 
 **Semisupervised**
 The training set is partially labeled.
+
 - Deep Belief Networks (DBNs) are based on unsupervised component Restricted Boltzman Machines (RBMs),
   stacked on top of one another. The whole system is fine-tuned using supervised learning.
 
@@ -153,5 +160,4 @@ Frame the Problem
  3. Load the data and take a quick look at the data structure (number and types of attributes, missing values, etc.)
  4. Visualize attribute distributions if possible
  5. Create a test set as early as possible: avoid data snooping bias
- 6.
- 
+
