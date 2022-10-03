@@ -33,3 +33,66 @@ Examples of applications:
 - Segmenting clients
 - Recommending products
 
+Types
+=====
+
+- By amount and type of supervision they get during training:
+  Supervised/Unsupervised/Semisupervised/Reinforcment
+- By whether or not they can learn incrementally on the fly:
+  Online (Incremental) / Batch learning
+- By comparing new data to known data, or by detecting patterns and building a predictive model
+  Instance / Model based learning
+
+**Supervised**
+The training set includes the desired solutions, called labels (classification and regression).
+
+- k-Nearest Neighbors 
+- Linear Regression
+- Logistic Regression
+- Support Vector Machines
+- Decision Trees
+- Random Forest
+- Neural Networks (except autoencoders and Boltzman machine)
+
+**Unsupervised**
+The training set is unlabeled.
+
+- Clustering (detecting groups of similar datapoints):
+  - K-Means
+  - DBSCAN
+  - Hierarchical Cluster Analysis (HCA)
+- Anomaly/Novelty detection:
+  - One-class SVM
+  - Isolation Forest
+- Visualization and Dimensionality reduction (simplify data representation):
+  - Principal Component Analisis (PCA)
+  - Kernel PCA
+  - Locally Linear Embedding (LLE)
+  - t-Distributed Stochastic Neighbor Embedding (t-SNE)
+
+Assosiation rule learning (discovering hidden relations between data attributes):
+
+  - Apriori
+  - Eclat
+
+**Semisupervised**
+The training set is partially labeled.
+
+- Deep Belief Networks (DBNs) are based on unsupervised component Restricted Boltzman Machines (RBMs),
+  stacked on top of one another. The whole system is fine-tuned using supervised learning.
+
+**Reinforcment Learning**
+An agent can observe the Environment, select and perform actions, and get rewards in return. It must learn the best strategy, called Policy, to get the most reward over time.
+
+**Batch Learning**
+A system must be trained using all available data, offline learning. To incorporate new data we need to learn the system from scratch on the full dataset. Thus it cannot adapt to rapidly changing data. Usually it takes a lot of time, power, memory and computing resources. 
+
+**Incremental Learning**
+Train the system incrementally by feeding it data instances sequentially, either individually or in small groups. This is a more reactive solution. Each learning step is fast and cheap, so the system can learn about new data on the fly. To control how fast the system should adapt to changing data the learning rate is used.
+
+**Instance-Based Learning**
+The system learns the examples by heart, then generalizes to new cases by using a similarity measure to compare them to the learned examples.
+
+**Model-Based Learning**
+The system builds a model of these examples and then uses that model to make predictions.
+
