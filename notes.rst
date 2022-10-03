@@ -155,3 +155,28 @@ Main steps
 7. Present your solution
 8. Launch, monitor, and maintain your system
 
+Frame the Problem
+=================
+
+1. Define the objective in business terms
+2. How will your solution be used?
+3. What are the current solutions/workarounds (if any)?
+4. How should you frame this problem (supervised/unsupervised, online/offline, etc.)?
+5. How should performance be measured?
+6. Is the performance measure aligned with the business objective?
+7. What would be the minimum performance needed to reach the business objective?
+8. What are comparable problems? Can you reuse experience or tools?
+9. Is human expertise available?
+10. How would you solve the problem manually?
+11. List the assumptions you (and others) have made so far
+12. Verify assumptions if possible
+ 
+Get the Data
+============
+ 
+1. Take care of your credentials and access authorizations to get the data
+2. Familiarize yourself with the data scheme
+3. Load the data and take a quick look at the data structure (number and types of attributes, missing values, etc.)
+4. Visualize attribute distributions if possible
+5. Create a test set as early as possible: avoid data snooping bias
+
