@@ -111,3 +111,71 @@ The system learns the examples by heart, then generalizes to new cases by using 
 
 The system builds a model of these examples and then uses that model to make predictions.
 
+Summary So Far
+==============
+
+1. You studied the data.
+2. You selected a model.
+3. You trained it on the training data (i.e. the learning algorithm searched for the model 
+   parameter values that minimize a cost function).
+4. You applied the model to make predictions on new cases (inference).
+
+Main Challenges
+===============
+
+1. Data
+
+  - insufficiant quantity of training data
+  - nonrepresentative training data
+  - poor-quality data
+  - irrelevant features
+
+2. Model
+
+  - overfitting (more training data, less features, simplify the model: regularization)
+  - underfitting (a more powerful model, reduce regularization, better features)
+
+**No Free Lunch Theorem**
+If you make absolutely no assumption about the data, then there is no reason to prefer one model over any other.
+
+==================
+End-to-End Example
+==================
+
+Main steps
+==========
+
+ 1. Frame the problem and look at the big picture
+ 2. Get the data
+ 3. Explore the data to get insights
+ 4. Prepare the data for ML algorithms
+ 5. Explore many different models and shortlist the best ones
+ 6. Fine-tune your models
+ 7. Present your solution
+ 8. Launch, monitor, and maintain your system
+
+Frame the Problem
+=================
+
+ 1. Define the objective in business terms
+ 2. How will your solution be used?
+ 3. What are the current solutions/workarounds (if any)?
+ 4. How should you frame this problem (supervised/unsupervised, online/offline, etc.)?
+ 5. How should performance be measured?
+ 6. Is the performance measure aligned with the business objective?
+ 7. What would be the minimum performance needed to reach the business objective?
+ 8. What are comparable problems? Can you reuse experience or tools?
+ 9. Is human expertise available?
+ 10. How would you solve the problem manually?
+ 11. List the assumptions you (and others) have made so far
+ 12. Verify assumptions if possible
+ 
+ Get the Data
+ ============
+ 
+ 1. Take care of your credentials and access authorizations to get the data
+ 2. Familiarize yourself with the data scheme
+ 3. Load the data and take a quick look at the data structure (number and types of attributes, missing values, etc.)
+ 4. Visualize attribute distributions if possible
+ 5. Create a test set as early as possible: avoid data snooping bias
+
