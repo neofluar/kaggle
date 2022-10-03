@@ -188,5 +188,15 @@ Get the Data
 2. Familiarize yourself with the data scheme
 3. Load the data and take a quick look at the data structure (number and types of attributes, missing values, etc.)
 4. Visualize attribute distributions if possible
-5. Create a test set as early as possible: avoid data snooping bias
+5. Create a test set as early as possible: avoid data snooping bias.
+
+Create a Test Set
+-----------------
+
+Random methods with fixed seed based on indicies or unique, immutable ids make updating your dataset not trivial.
+
+Stratified sampling by the most valuable feature in the dataset. The feature should not have too many strata, and each stratum should be large enough.
+
+Discover and Visualize the Data
+-------------------------------
 
