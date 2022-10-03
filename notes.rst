@@ -139,7 +139,6 @@ Main Challenges
 
 If you make absolutely no assumption about the data, then there is no reason to prefer one model over any other.
 
-
 ==================
 End-to-End Example
 ==================
