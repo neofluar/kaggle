@@ -43,7 +43,8 @@ Types
 - By comparing new data to known data, or by detecting patterns and building a predictive model
   Instance / Model based learning
 
-**Supervised**
+Supervised
+----------
 
 The training set includes the desired solutions, called labels (classification and regression).
 
@@ -55,7 +56,8 @@ The training set includes the desired solutions, called labels (classification a
 - Random Forest
 - Neural Networks (except autoencoders and Boltzman machine)
 
-**Unsupervised**
+Unsupervised
+------------
 
 The training set is unlabeled.
 
@@ -77,37 +79,44 @@ The training set is unlabeled.
   - Locally Linear Embedding (LLE)
   - t-Distributed Stochastic Neighbor Embedding (t-SNE)
 
-**Assosiation rule learning**
+Assosiation Rule Learning
+-------------------------
 
 Discovering hidden relations between data attributes:
 
 - Apriori
 - Eclat
 
-**Semisupervised**
+Semisupervised
+--------------
 
 The training set is partially labeled.
 
 - Deep Belief Networks (DBNs) are based on unsupervised component Restricted Boltzman Machines (RBMs),
   stacked on top of one another. The whole system is fine-tuned using supervised learning.
 
-**Reinforcment Learning**
+Reinforcment Learning
+---------------------
 
 An agent can observe the Environment, select and perform actions, and get rewards in return. It must learn the best strategy, called Policy, to get the most reward over time.
 
-**Batch Learning**
+Batch Learning
+--------------
 
 A system must be trained using all available data, offline learning. To incorporate new data we need to learn the system from scratch on the full dataset. Thus it cannot adapt to rapidly changing data. Usually it takes a lot of time, power, memory and computing resources. 
 
-**Incremental Learning**
+Incremental Learning
+--------------------
 
 Train the system incrementally by feeding it data instances sequentially, either individually or in small groups. This is a more reactive solution. Each learning step is fast and cheap, so the system can learn about new data on the fly. To control how fast the system should adapt to changing data the learning rate is used.
 
-**Instance-Based Learning**
+Instance-Based Learning
+-----------------------
 
 The system learns the examples by heart, then generalizes to new cases by using a similarity measure to compare them to the learned examples.
 
-**Model-Based Learning**
+Model-Based Learning
+--------------------
 
 The system builds a model of these examples and then uses that model to make predictions.
 
@@ -135,7 +144,8 @@ Main Challenges
   - overfitting (more training data, less features, simplify the model: regularization)
   - underfitting (a more powerful model, reduce regularization, better features)
 
-**No Free Lunch Theorem**
+No Free Lunch Theorem
+---------------------
 
 If you make absolutely no assumption about the data, then there is no reason to prefer one model over any other.
 
