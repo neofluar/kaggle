@@ -200,3 +200,20 @@ Stratified sampling by the most valuable feature in the dataset. The feature sho
 Discover and Visualize the Data
 -------------------------------
 
+1. Use different scatter plots
+2. Look for linear correlations between attributes using `pandas.DataFrame.corr` method
+3. Try  `pandas.plotting.scatter_matrix` function on a few promissing attributes that seem most correlated with the target        attribute
+4. Zoom in on the distinct correlation plots to see data quirks and anomalies if any
+5. Experiment with feature engineering (combine some attributes) using common sence, then check the correlation agains the new    attributes
+
+Prepare the Data for ML Algorithms
+----------------------------------
+
+1. Separate the predictors and the labels.
+2. Deal with missing values:
+  
+  - Get rid of the corresponding samples
+  - Get rid of the whole attribute
+  - Set the values to some value (zero, mean, median, etc.)
+  
+3. Encode categorical attributes. Bear in mind that ML algorithms will assume that 2 nearby values are more similar than 2        distant values for ordered categories such as bad-average-good-excellent. But it can be not your case, then use one-hot        encoding.
