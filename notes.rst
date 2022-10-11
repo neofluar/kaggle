@@ -201,8 +201,7 @@ Discover and Visualize the Data
 -------------------------------
 
 1. Use different scatter plots
-2. Look for linear correlations between attributes using `pandas.DataFrame.corr` method
-3. Try  `pandas.plotting.scatter_matrix` function on a few promissing attributes that seem most correlated with the target        attribute
+2. Look for linear correlations between attributes using
 4. Zoom in on the distinct correlation plots to see data quirks and anomalies if any
 5. Experiment with feature engineering (combine some attributes) using common sence, then check the correlation agains the new    attributes
 
@@ -212,8 +211,13 @@ Prepare the Data for ML Algorithms
 1. Separate the predictors and the labels.
 2. Deal with missing values:
   
-  - Get rid of the corresponding samples
-  - Get rid of the whole attribute
-  - Set the values to some value (zero, mean, median, etc.)
+  2.1. Get rid of the corresponding samples
+  2.2. Get rid of the whole attribute
+  2.3. Set the values to some value (zero, mean, median, etc.)
   
-3. Encode categorical attributes. Bear in mind that ML algorithms will assume that 2 nearby values are more similar than 2        distant values for ordered categories such as bad-average-good-excellent. But it can be not your case, then use one-hot        encoding.
+3. Encode categorical attributes using ordinal numbers. Bear in mind that ML algorithms will assume that 2 nearby values are      more similar than 2 distant values. That is good for ordered categories, but it can be not your case, then use *one-hot        encoding*. If a categorical attribute has a large number of possible categories, then one-hot encoding will result in a        large number of input features. This may slow down training and degrade performance. If this happens, you may want to          replace the categorical input with useful numeric features related to the categories. Alternatively, you could replace each    category with a learnable, low-dimensional vector called an *embedding*.
+4. Scale input features:
+
+  4.1. *Min-max scaling* (aka *normalization*) is the simplest: values are shifted and rescaled so they end up ranging from 0          to 1. We do this by subtracting the min value and dividing by the max minus the min.
+  4.2. *Standardization*: subtract the mean and divide by standard deviation. Unlike min-max scaling, standardization does not        bound values to a specific range. However, standardization is much less affected by outliers.
+5. Create a custom transformer to automate both transformation of numerical and categorical attributes.
