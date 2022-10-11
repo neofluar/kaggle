@@ -221,3 +221,24 @@ Prepare the Data for ML Algorithms
   4.1. *Min-max scaling* (aka *normalization*) is the simplest: values are shifted and rescaled so they end up ranging from 0          to 1. We do this by subtracting the min value and dividing by the max minus the min.
   4.2. *Standardization*: subtract the mean and divide by standard deviation. Unlike min-max scaling, standardization does not        bound values to a specific range. However, standardization is much less affected by outliers.
 5. Create a custom transformer to automate both transformation of numerical and categorical attributes.
+
+Select and Train a Model
+------------------------
+
+Train a simple model, then evaluate it on the training set. If a typical prediction error on the training set is large, the model underfits the training data. It means that the features do not provide enough information to make good predictions, or that the model is not powerful enough.
+
+To fix underfitting:
+
+  - Select a more powerfull model
+  - Feed the model with better features
+  - Reduce the constraints on the model (regularization)
+  
+If a typical prediction error on the training set is small (or zero), that may be a sign of the model overfits the training set. You need another way to evaluate such a model using the training set. Do not touch the test set yet! Make use of *K-fold cross-validation* on the training set only. Notice that cross-validation allows you to get not only an estimate of the performance of your model, but also a measure of how good this estimate is (i.e. its standard deviation). If the score on the training set is much lower than on the validation sets, that still means the model overfits the training set.
+
+To fix overfitting:
+
+  - Simplify the model
+  - Constrain the model (regularization)
+  - Get a lot more training data
+
+Try out many other models from various categories of ML algorithms, without spending too much time tweaking the hyperparameters. The goal is to shortlist 2-5 promissing models.

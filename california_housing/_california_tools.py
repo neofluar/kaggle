@@ -1,5 +1,6 @@
 __all__ = [
     'CombinedAttributesAdder',
+    'display_scores',
     'load_data',
 ]
 
@@ -18,6 +19,10 @@ _ROOMS_INDEX, _BEDROOMS_INDEX, _POPULATION_INDEX, _HOUSEHOLDS_INDEX = 3, 4, 5, 6
 def load_data(base_path: str, csv_name: str = _CSV_NAME) -> pd.DataFrame:
     path = os.path.join(base_path, csv_name)
     return pd.read_csv(path)
+
+
+def display_scores(scores: np.ndarray) -> None:
+    print(f'Scores: {scores}\nMean: {scores.mean()}\nSTD: {scores.std()}')
 
 
 class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
