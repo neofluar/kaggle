@@ -242,3 +242,29 @@ To fix overfitting:
   - Get a lot more training data
 
 Try out many other models from various categories of ML algorithms, without spending too much time tweaking the hyperparameters. The goal is to shortlist 2-5 promissing models.
+
+Fine-Tune Your Model
+--------------------
+
+A few things to do
+
+1. Grid Search is fine when you explore relatively few combinations
+2. Random Search is fine when the hyperparameters search space is large
+3. Combine the models that perform better *ensemble methods*
+
+You will often get good insights on the problem by inspecting the best model. You may want to try dropping some of the less important features. After tweaking your model for a while, you eventually have a system that performs sufficiently well/ Now it is time to evalute it on the test set. if you did a lot of hyperparameters tuning, the performance will usually be slightly worse than what you measured using cross-validation. *Resist the temptation to tweak hyperparameters to make the numbers look good on the test set; the improvements would be unlikely to generalize on the new data!*
+
+Present Your Solution
+---------------------
+
+Highlight what you have learned, what worked and what did not, what assumptions were made, and what your system's limitations are.
+
+Launch, Monitor, and Maintain Your System
+-----------------------------------------
+
+1. Deploy the model to your production environment (website, web service, cloud)
+2. Write monitoring code to check your system's live performance at regular intervals and trigger alerts when it drops
+3. If the data keeps evolving, you will need to update your dataset and retrain the model regulary
+4. Evaluate input data quality constantly
+5. keep backups of every model you create and every version of the dataset
+
