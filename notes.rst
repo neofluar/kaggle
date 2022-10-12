@@ -267,4 +267,3 @@ Launch, Monitor, and Maintain Your System
 3. If the data keeps evolving, you will need to update your dataset and retrain the model regulary
 4. Evaluate input data quality constantly
 5. keep backups of every model you create and every version of the dataset
-
