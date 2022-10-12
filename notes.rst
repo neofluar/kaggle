@@ -1,6 +1,6 @@
-================
-The Fundamentals
-================
+===================
+1. The Fundamentals
+===================
 
 What
 ====
@@ -10,7 +10,7 @@ ML is the science of programming computers so they can learn from data.
 A computer program is said to learn from experience E with respect to some task T and some perfomance measure P, if its perfomans on T, as measured by P, improves with E.
 
 Why
-===
+====
 
 ML is great for:
 
@@ -149,9 +149,9 @@ No Free Lunch Theorem
 
 If you make absolutely no assumption about the data, then there is no reason to prefer one model over any other.
 
-==================
-End-to-End Example
-==================
+================================
+2. End-to-End Regression Example
+================================
 
 Main steps
 ==========
@@ -198,7 +198,7 @@ Random methods with fixed seed based on indicies or unique, immutable ids make u
 Stratified sampling by the most valuable feature in the dataset. The feature should not have too many strata, and each stratum should be large enough.
 
 Discover and Visualize the Data
--------------------------------
+===============================
 
 1. Use different scatter plots
 2. Look for linear correlations between attributes using
@@ -206,45 +206,49 @@ Discover and Visualize the Data
 5. Experiment with feature engineering (combine some attributes) using common sence, then check the correlation agains the new    attributes
 
 Prepare the Data for ML Algorithms
-----------------------------------
+==================================
 
 1. Separate the predictors and the labels.
 2. Deal with missing values:
   
   2.1. Get rid of the corresponding samples
+  
   2.2. Get rid of the whole attribute
+  
   2.3. Set the values to some value (zero, mean, median, etc.)
   
 3. Encode categorical attributes using ordinal numbers. Bear in mind that ML algorithms will assume that 2 nearby values are      more similar than 2 distant values. That is good for ordered categories, but it can be not your case, then use *one-hot        encoding*. If a categorical attribute has a large number of possible categories, then one-hot encoding will result in a        large number of input features. This may slow down training and degrade performance. If this happens, you may want to          replace the categorical input with useful numeric features related to the categories. Alternatively, you could replace each    category with a learnable, low-dimensional vector called an *embedding*.
 4. Scale input features:
 
   4.1. *Min-max scaling* (aka *normalization*) is the simplest: values are shifted and rescaled so they end up ranging from 0          to 1. We do this by subtracting the min value and dividing by the max minus the min.
+  
   4.2. *Standardization*: subtract the mean and divide by standard deviation. Unlike min-max scaling, standardization does not        bound values to a specific range. However, standardization is much less affected by outliers.
+
 5. Create a custom transformer to automate both transformation of numerical and categorical attributes.
 
 Select and Train a Model
-------------------------
+========================
 
 Train a simple model, then evaluate it on the training set. If a typical prediction error on the training set is large, the model underfits the training data. It means that the features do not provide enough information to make good predictions, or that the model is not powerful enough.
 
 To fix underfitting:
 
-  - Select a more powerfull model
-  - Feed the model with better features
-  - Reduce the constraints on the model (regularization)
+- Select a more powerfull model
+- Feed the model with better features
+- Reduce the constraints on the model (regularization)
   
 If a typical prediction error on the training set is small (or zero), that may be a sign of the model overfits the training set. You need another way to evaluate such a model using the training set. Do not touch the test set yet! Make use of *K-fold cross-validation* on the training set only. Notice that cross-validation allows you to get not only an estimate of the performance of your model, but also a measure of how good this estimate is (i.e. its standard deviation). If the score on the training set is much lower than on the validation sets, that still means the model overfits the training set.
 
 To fix overfitting:
 
-  - Simplify the model
-  - Constrain the model (regularization)
-  - Get a lot more training data
+- Simplify the model
+- Constrain the model (regularization)
+- Get a lot more training data
 
 Try out many other models from various categories of ML algorithms, without spending too much time tweaking the hyperparameters. The goal is to shortlist 2-5 promissing models.
 
 Fine-Tune Your Model
---------------------
+====================
 
 A few things to do
 
@@ -254,16 +258,20 @@ A few things to do
 
 You will often get good insights on the problem by inspecting the best model. You may want to try dropping some of the less important features. After tweaking your model for a while, you eventually have a system that performs sufficiently well/ Now it is time to evalute it on the test set. if you did a lot of hyperparameters tuning, the performance will usually be slightly worse than what you measured using cross-validation. *Resist the temptation to tweak hyperparameters to make the numbers look good on the test set; the improvements would be unlikely to generalize on the new data!*
 
-Present Your Solution
----------------------
-
-Highlight what you have learned, what worked and what did not, what assumptions were made, and what your system's limitations are.
+Present your solution to the stake holders. Highlight what you have learned, what worked and what did not, what assumptions were made, and what your system's limitations are.
 
 Launch, Monitor, and Maintain Your System
------------------------------------------
+=========================================
 
 1. Deploy the model to your production environment (website, web service, cloud)
 2. Write monitoring code to check your system's live performance at regular intervals and trigger alerts when it drops
 3. If the data keeps evolving, you will need to update your dataset and retrain the model regulary
 4. Evaluate input data quality constantly
-5. keep backups of every model you create and every version of the dataset
+5. Keep backups of every model you create and every version of the dataset
+
+=================
+3. Classification
+=================
+
+3.1. MNIST
+==========
