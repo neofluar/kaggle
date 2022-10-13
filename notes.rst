@@ -191,7 +191,7 @@ Get the Data
 5. Create a test set as early as possible: avoid data snooping bias.
 
 Create a Test Set
------------------
+=================
 
 Random methods with fixed seed based on indicies or unique, immutable ids make updating your dataset not trivial.
 
@@ -273,5 +273,81 @@ Launch, Monitor, and Maintain Your System
 3. Classification
 =================
 
-3.1. MNIST
-==========
+3.1. A Binary Classifier
+========================
+
+A good way to evaluate a model is to use cross-validation that can be performed with different scoring strategies.  
+
+Accuracy
+--------
+
+Accuracy is generally not the preffered performance measure for classifiers, especially when you are dealing with a skewed dataset. A much better way to evaluate the performance of a classifier is to look at the *confusion matrix*. 
+
+Confusion Matrix
+----------------
+
+The general idea is to count the number of times instances of class A are classified as class B. Each row in the matrix represents an *actual* class, while each column represents a *predicted* class.
+
+|  | Predicted Negative | Predicted Positive |
+| --- | --- | --- |
+| **Actual Negative** | TN  | FP  |
+| **Actual Positive** | FN  | TP  |
+
+A perfect classifier would have onlu true positives and true negatives values.
+
+Precision and Recall
+--------------------
+
+*Precision = TP / (TP + FP)* is the accuracy of the positive predictions (*specificity*).  
+
+*Recall = TP / (TP + FN)* is the ratio of actual positive instances that are correctly detected (*sensitivity*).  
+
+When the model claims an image represents positive class, it is correct only 100xP% of the time. Moreover, it only detects 100xR% of the actual positives.  
+
+It is often convenient to combine precision and recall into a single metric called *F1 score*. 
+
+F1 Score
+--------
+
+It is the harmonic mean of precision and recall that gives much more weight to low values. As a result, the classifier will only get a high F1 score if both recall and precision are high.  
+
+F1 = 2 / (1/P + 1/R)  
+
+Precision/Recall Trade-off
+--------------------------
+
+Increasing precision reduces recall, and vice versa. The key concept is a moving decision threshold. Increasing the threshold increases precision and reduces recall. Conversely, lowering the threshold increases recall and reduses precision. We can observe it by controling the threshold manualy. We can plot precision and recall against all possible threshold values to select a good trade-off. 
+
+The PR Curve
+------------
+
+Another way to do that is to plot precision directly against recall and choose an arbitrary balance point according to our task in hands. But remember that increasing the threshold allows you to get any precision value you want. But a high-precision classifier is not very useful if its recall is too low.
+
+The ROC Curve
+-------------
+
+The *reciver operating characteristic* (ROC) curve is another common tool used with binary classifiers. It is very similar to the PR curve, but instead of plotting precision versus recall, the ROC curve plots of the *true positive rate* (aka recall) against the *false positive rate* for all possible thresholds. The FPR is the ratio of negative instances that are incorrectly classified as positive. It is equal to 1 minus the *true negative rate*, which is the ratio of negative instances that are correctly classified as negative. One way to compare classifiers is to measure the *area under the curve* (AUC).
+
+PRC or ROC?
+-----------
+
+Prefer the PR curve whenever the positive class is rare or whenever you care more about the false positives than the false negatives. Overwise, use the ROC curve.
+
+
+3.2. Multiclass Classification
+==============================
+
+Whereas binary classifiers distinguish between 2 classes, *multyclass classifiers* can distinguish between more than 2 classes. Some algorithms (such as SGDClassifier, Random Forest, and naive Bayes classifiers) are capable of handling multiple classes natively. Others (such as Logistic Regression or Support Vector Machine classifiers) are strictly binary. However, there are various strategies that you can use to perform multiclass classification with multiple binary classifiers.
+
+- *One-vs-Rest* (or *One-vs-All*): each class gets its own binary classifier. Select the class whose classifier outputs the       highest score
+
+- *One-vs-One*: each class pair gets its own classifier (if there is N classes, then you train Nx(N-1)/2 binary classifiers.      Select a class that won the most duels
+
+OvO has much more classifiers to train. The main advantage of OvO is that each classifier needs to be trained on the part of the training set for the 2 classes that it must distinguish. Some algorithms (such as Support Vector Machine classifier) scale poorly with the size of the training set. For this algorithms OvO is preffered because it is faster to train many classifiers on small training sets than to train few classifiers on large training sets. For most binary classification algorithms, however, OvR is preffered.
+
+3.3. Error Analysis
+===================
+
+We will assume that you have found a promising model and you want to find ways to improve it. One way to do this is to analyze the types of errors it makes.
+
+Look at the confusion matrix. It is often more convinient to look at an image representation of the confusion matrix. But      first, divide its values by the number of images in the corresponding class so you can compare error rates instead of          absolute numbers of errors. Fill the diagonal with 0s to keep errors only, and plot the result. Analyzing the confusion matrix often gives you insights into ways to improve your classifier. Try to gather more images of the most misclassified classes. Or engineer new features that would help the classifier. Or preprocess images to make some patterns (such as closed loops) stand out more.
