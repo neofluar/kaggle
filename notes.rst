@@ -288,10 +288,13 @@ Confusion Matrix
 
 The general idea is to count the number of times instances of class A are classified as class B. Each row in the matrix represents an *actual* class, while each column represents a *predicted* class.
 
-| --- | Predicted Negative | Predicted Positive |
-| --- | --- | --- |
-| **Actual Negative** | TN  | FP  |
-| **Actual Positive** | FN  | TP  |
++---------------------+---------------------+--------------------+
+|                     |  Predicted Negative | Predicted Positive |
++=====================+=====================+====================+
+| **Actual Negative** | TN                  | FP                 |
++---------------------+---------------------+--------------------+
+| **Actual Positive** | FN                  | TP                 |
++---------------------+---------------------+--------------------+
 
 A perfect classifier would have onlu true positives and true negatives values.
 
@@ -352,14 +355,60 @@ We will assume that you have found a promising model and you want to find ways t
 
 Look at the confusion matrix. It is often more convinient to look at an image representation of the confusion matrix. But      first, divide its values by the number of images in the corresponding class so you can compare error rates instead of          absolute numbers of errors. Fill the diagonal with 0s to keep errors only, and plot the result. Analyzing the confusion matrix often gives you insights into ways to improve your classifier. Try to gather more images of the most misclassified classes. Or engineer new features that would help the classifier. Or preprocess images to make some patterns (such as closed loops) stand out more.
 
-4.4. Multilabel Classification
+3.4. Multilabel Classification
 ==============================
 
 In some cases you may want your classifier to output multiple classes for each instance. Such a a classification system that outputs multiple binary tags is called a *multilabel classification* system. In general you need only create 2 or more label sets and pass them to an algorithm which supports multilabel classification such as `KNeighborClassifier`.  
 
 There are several ways to evaluate a multilabel classifier, and selecting the right metric really depends on your task. One approach is to measure F1 score for each individual label (or any other classifier metric), then simply average them. This assumes that all labels are equally important, which may not be the case. You can assign a weight to each label.
 
-4.5. Multioutput Classification
+3.5. Multioutput Classification
 ===============================
 
 *Multioutput-multiclass* classification is simply a generaluzation of multilabel classification where each label can be multiclass (i.e., it can have more than 2 possible values). To illustrate this, we can build a system that removes noise from images. Notice that the classifier's output is multilabel (one label per pixel) and each label can have multiple values (pixel intensity ranges from 0 to 255).
+
+==================
+4. Training Models
+==================
+
+4.1. Linear Regression
+======================
+
+There are 2 very different ways to train it:
+
+- Using a direct "closed-form" equation that directly computes the model parameters that best fit the model to the training set   (i.e., the model parameters that minimize the cost function over the training set
+- Using an iterative optimization approach called *Gradien Descent* that gradually tweaks the model parameters to minimize the   cost function over the training set
+
+More generally, a linear model makes predictions by simply computing a weighted sum of the input features, plus a constant called the *bias term* (*intersept term*)
+
+`y_pred = THETA_0 + THETA_1*x_1 + THETA_2*x_2 + ... + THETA_n*x_n`
+
+This can be written using a vectorized form  
+
+`y_pred = **THETA** **x**`  
+
+- **THETA** is the model's *parameter vector*, containing the bias term THETA_0 and the feature weights THETA_1 to THETA_n
+- **x** is the instance's *feature vector* from x_1 to x_n, containong x_0 = 1
+
+The Normal Equation
+-------------------
+
+`**THETA_BEST** = (**X**.T **X**) ^ -1 **y**`
+
+In this equation  
+
+- **THETA_BEST** is the value of **THETA** that minimize the cost function
+- **y** is the vector of target values
+
+`LinearRegression` from `Scikit-learn` is based on the *pseudoinverse* of **X**. The pseudoinverse is computed using a standard matrix factorization technique called *Singular Value Decomposition* (*SVD*) that can decompose the training set matrix **X** into the matrix multiplication of 3 matrices. This approach is more efficient than computing the Normal Equation, plus it handles edge cases nicely.
+
+Computational Complexity
+------------------------
+
+The Normal Equation computes the inverse of **X**.T **X**, which is (n + 1)x(n + 1) matrix (where n is the number of features). The *computational complexity* of inverting such a matrix is typically about O(n^2.4) to O(n^3). The SVD approach is about O(n^2). But both the Normal Equation and the SVD approach get very slow when the number of features grows large (e.g., 100.000). On the positive side, both are linear with regard to the number of instances in the training set O(m). In both cases, predictions are very fast: the computational complexity is linear with regard both the number of instances in the test set and n.  
+
+Now we will look at a very different way to train a LR model, which is better suited for cases where there are a large number of features or too mane training instances to fit in memory.
+
+Gradient Descent
+----------------
+
