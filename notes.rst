@@ -273,8 +273,8 @@ Launch, Monitor, and Maintain Your System
 3. Classification
 =================
 
-3.1. A Binary Classifier
-========================
+3.1. Binary Classification
+==========================
 
 A good way to evaluate a model is to use cross-validation that can be performed with different scoring strategies.  
 
@@ -288,7 +288,7 @@ Confusion Matrix
 
 The general idea is to count the number of times instances of class A are classified as class B. Each row in the matrix represents an *actual* class, while each column represents a *predicted* class.
 
-|  | Predicted Negative | Predicted Positive |
+| --- | Predicted Negative | Predicted Positive |
 | --- | --- | --- |
 | **Actual Negative** | TN  | FP  |
 | **Actual Positive** | FN  | TP  |
@@ -351,3 +351,15 @@ OvO has much more classifiers to train. The main advantage of OvO is that each c
 We will assume that you have found a promising model and you want to find ways to improve it. One way to do this is to analyze the types of errors it makes.
 
 Look at the confusion matrix. It is often more convinient to look at an image representation of the confusion matrix. But      first, divide its values by the number of images in the corresponding class so you can compare error rates instead of          absolute numbers of errors. Fill the diagonal with 0s to keep errors only, and plot the result. Analyzing the confusion matrix often gives you insights into ways to improve your classifier. Try to gather more images of the most misclassified classes. Or engineer new features that would help the classifier. Or preprocess images to make some patterns (such as closed loops) stand out more.
+
+4.4. Multilabel Classification
+==============================
+
+In some cases you may want your classifier to output multiple classes for each instance. Such a a classification system that outputs multiple binary tags is called a *multilabel classification* system. In general you need only create 2 or more label sets and pass them to an algorithm which supports multilabel classification such as `KNeighborClassifier`.  
+
+There are several ways to evaluate a multilabel classifier, and selecting the right metric really depends on your task. One approach is to measure F1 score for each individual label (or any other classifier metric), then simply average them. This assumes that all labels are equally important, which may not be the case. You can assign a weight to each label.
+
+4.5. Multioutput Classification
+===============================
+
+*Multioutput-multiclass* classification is simply a generaluzation of multilabel classification where each label can be multiclass (i.e., it can have more than 2 possible values). To illustrate this, we can build a system that removes noise from images. Notice that the classifier's output is multilabel (one label per pixel) and each label can have multiple values (pixel intensity ranges from 0 to 255).
