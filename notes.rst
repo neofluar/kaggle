@@ -1,6 +1,6 @@
-================
-The Fundamentals
-================
+===================
+1. The Fundamentals
+===================
 
 What
 ====
@@ -10,7 +10,7 @@ ML is the science of programming computers so they can learn from data.
 A computer program is said to learn from experience E with respect to some task T and some perfomance measure P, if its perfomans on T, as measured by P, improves with E.
 
 Why
-===
+====
 
 ML is great for:
 
@@ -149,9 +149,9 @@ No Free Lunch Theorem
 
 If you make absolutely no assumption about the data, then there is no reason to prefer one model over any other.
 
-==================
-End-to-End Example
-==================
+================================
+2. End-to-End Regression Example
+================================
 
 Main steps
 ==========
@@ -191,14 +191,14 @@ Get the Data
 5. Create a test set as early as possible: avoid data snooping bias.
 
 Create a Test Set
------------------
+=================
 
 Random methods with fixed seed based on indicies or unique, immutable ids make updating your dataset not trivial.
 
 Stratified sampling by the most valuable feature in the dataset. The feature should not have too many strata, and each stratum should be large enough.
 
 Discover and Visualize the Data
--------------------------------
+===============================
 
 1. Use different scatter plots
 2. Look for linear correlations between attributes using
@@ -206,45 +206,49 @@ Discover and Visualize the Data
 5. Experiment with feature engineering (combine some attributes) using common sence, then check the correlation agains the new    attributes
 
 Prepare the Data for ML Algorithms
-----------------------------------
+==================================
 
 1. Separate the predictors and the labels.
 2. Deal with missing values:
   
   2.1. Get rid of the corresponding samples
+  
   2.2. Get rid of the whole attribute
+  
   2.3. Set the values to some value (zero, mean, median, etc.)
   
 3. Encode categorical attributes using ordinal numbers. Bear in mind that ML algorithms will assume that 2 nearby values are      more similar than 2 distant values. That is good for ordered categories, but it can be not your case, then use *one-hot        encoding*. If a categorical attribute has a large number of possible categories, then one-hot encoding will result in a        large number of input features. This may slow down training and degrade performance. If this happens, you may want to          replace the categorical input with useful numeric features related to the categories. Alternatively, you could replace each    category with a learnable, low-dimensional vector called an *embedding*.
 4. Scale input features:
 
   4.1. *Min-max scaling* (aka *normalization*) is the simplest: values are shifted and rescaled so they end up ranging from 0          to 1. We do this by subtracting the min value and dividing by the max minus the min.
+  
   4.2. *Standardization*: subtract the mean and divide by standard deviation. Unlike min-max scaling, standardization does not        bound values to a specific range. However, standardization is much less affected by outliers.
+
 5. Create a custom transformer to automate both transformation of numerical and categorical attributes.
 
 Select and Train a Model
-------------------------
+========================
 
 Train a simple model, then evaluate it on the training set. If a typical prediction error on the training set is large, the model underfits the training data. It means that the features do not provide enough information to make good predictions, or that the model is not powerful enough.
 
 To fix underfitting:
 
-  - Select a more powerfull model
-  - Feed the model with better features
-  - Reduce the constraints on the model (regularization)
+- Select a more powerfull model
+- Feed the model with better features
+- Reduce the constraints on the model (regularization)
   
 If a typical prediction error on the training set is small (or zero), that may be a sign of the model overfits the training set. You need another way to evaluate such a model using the training set. Do not touch the test set yet! Make use of *K-fold cross-validation* on the training set only. Notice that cross-validation allows you to get not only an estimate of the performance of your model, but also a measure of how good this estimate is (i.e. its standard deviation). If the score on the training set is much lower than on the validation sets, that still means the model overfits the training set.
 
 To fix overfitting:
 
-  - Simplify the model
-  - Constrain the model (regularization)
-  - Get a lot more training data
+- Simplify the model
+- Constrain the model (regularization)
+- Get a lot more training data
 
 Try out many other models from various categories of ML algorithms, without spending too much time tweaking the hyperparameters. The goal is to shortlist 2-5 promissing models.
 
 Fine-Tune Your Model
---------------------
+====================
 
 A few things to do
 
@@ -254,16 +258,108 @@ A few things to do
 
 You will often get good insights on the problem by inspecting the best model. You may want to try dropping some of the less important features. After tweaking your model for a while, you eventually have a system that performs sufficiently well/ Now it is time to evalute it on the test set. if you did a lot of hyperparameters tuning, the performance will usually be slightly worse than what you measured using cross-validation. *Resist the temptation to tweak hyperparameters to make the numbers look good on the test set; the improvements would be unlikely to generalize on the new data!*
 
-Present Your Solution
----------------------
-
-Highlight what you have learned, what worked and what did not, what assumptions were made, and what your system's limitations are.
+Present your solution to the stake holders. Highlight what you have learned, what worked and what did not, what assumptions were made, and what your system's limitations are.
 
 Launch, Monitor, and Maintain Your System
------------------------------------------
+=========================================
 
 1. Deploy the model to your production environment (website, web service, cloud)
 2. Write monitoring code to check your system's live performance at regular intervals and trigger alerts when it drops
 3. If the data keeps evolving, you will need to update your dataset and retrain the model regulary
 4. Evaluate input data quality constantly
-5. keep backups of every model you create and every version of the dataset
+5. Keep backups of every model you create and every version of the dataset
+
+=================
+3. Classification
+=================
+
+3.1. Binary Classification
+==========================
+
+A good way to evaluate a model is to use cross-validation that can be performed with different scoring strategies.  
+
+Accuracy
+--------
+
+Accuracy is generally not the preffered performance measure for classifiers, especially when you are dealing with a skewed dataset. A much better way to evaluate the performance of a classifier is to look at the *confusion matrix*. 
+
+Confusion Matrix
+----------------
+
+The general idea is to count the number of times instances of class A are classified as class B. Each row in the matrix represents an *actual* class, while each column represents a *predicted* class.
+
+| --- | Predicted Negative | Predicted Positive |
+| --- | --- | --- |
+| **Actual Negative** | TN  | FP  |
+| **Actual Positive** | FN  | TP  |
+
+A perfect classifier would have onlu true positives and true negatives values.
+
+Precision and Recall
+--------------------
+
+*Precision = TP / (TP + FP)* is the accuracy of the positive predictions (*specificity*).  
+
+*Recall = TP / (TP + FN)* is the ratio of actual positive instances that are correctly detected (*sensitivity*).  
+
+When the model claims an image represents positive class, it is correct only 100xP% of the time. Moreover, it only detects 100xR% of the actual positives.  
+
+It is often convenient to combine precision and recall into a single metric called *F1 score*. 
+
+F1 Score
+--------
+
+It is the harmonic mean of precision and recall that gives much more weight to low values. As a result, the classifier will only get a high F1 score if both recall and precision are high.  
+
+F1 = 2 / (1/P + 1/R)  
+
+Precision/Recall Trade-off
+--------------------------
+
+Increasing precision reduces recall, and vice versa. The key concept is a moving decision threshold. Increasing the threshold increases precision and reduces recall. Conversely, lowering the threshold increases recall and reduses precision. We can observe it by controling the threshold manualy. We can plot precision and recall against all possible threshold values to select a good trade-off. 
+
+The PR Curve
+------------
+
+Another way to do that is to plot precision directly against recall and choose an arbitrary balance point according to our task in hands. But remember that increasing the threshold allows you to get any precision value you want. But a high-precision classifier is not very useful if its recall is too low.
+
+The ROC Curve
+-------------
+
+The *reciver operating characteristic* (ROC) curve is another common tool used with binary classifiers. It is very similar to the PR curve, but instead of plotting precision versus recall, the ROC curve plots of the *true positive rate* (aka recall) against the *false positive rate* for all possible thresholds. The FPR is the ratio of negative instances that are incorrectly classified as positive. It is equal to 1 minus the *true negative rate*, which is the ratio of negative instances that are correctly classified as negative. One way to compare classifiers is to measure the *area under the curve* (AUC).
+
+PRC or ROC?
+-----------
+
+Prefer the PR curve whenever the positive class is rare or whenever you care more about the false positives than the false negatives. Overwise, use the ROC curve.
+
+
+3.2. Multiclass Classification
+==============================
+
+Whereas binary classifiers distinguish between 2 classes, *multyclass classifiers* can distinguish between more than 2 classes. Some algorithms (such as SGDClassifier, Random Forest, and naive Bayes classifiers) are capable of handling multiple classes natively. Others (such as Logistic Regression or Support Vector Machine classifiers) are strictly binary. However, there are various strategies that you can use to perform multiclass classification with multiple binary classifiers.
+
+- *One-vs-Rest* (or *One-vs-All*): each class gets its own binary classifier. Select the class whose classifier outputs the       highest score
+
+- *One-vs-One*: each class pair gets its own classifier (if there is N classes, then you train Nx(N-1)/2 binary classifiers.      Select a class that won the most duels
+
+OvO has much more classifiers to train. The main advantage of OvO is that each classifier needs to be trained on the part of the training set for the 2 classes that it must distinguish. Some algorithms (such as Support Vector Machine classifier) scale poorly with the size of the training set. For this algorithms OvO is preffered because it is faster to train many classifiers on small training sets than to train few classifiers on large training sets. For most binary classification algorithms, however, OvR is preffered.
+
+3.3. Error Analysis
+===================
+
+We will assume that you have found a promising model and you want to find ways to improve it. One way to do this is to analyze the types of errors it makes.
+
+Look at the confusion matrix. It is often more convinient to look at an image representation of the confusion matrix. But      first, divide its values by the number of images in the corresponding class so you can compare error rates instead of          absolute numbers of errors. Fill the diagonal with 0s to keep errors only, and plot the result. Analyzing the confusion matrix often gives you insights into ways to improve your classifier. Try to gather more images of the most misclassified classes. Or engineer new features that would help the classifier. Or preprocess images to make some patterns (such as closed loops) stand out more.
+
+4.4. Multilabel Classification
+==============================
+
+In some cases you may want your classifier to output multiple classes for each instance. Such a a classification system that outputs multiple binary tags is called a *multilabel classification* system. In general you need only create 2 or more label sets and pass them to an algorithm which supports multilabel classification such as `KNeighborClassifier`.  
+
+There are several ways to evaluate a multilabel classifier, and selecting the right metric really depends on your task. One approach is to measure F1 score for each individual label (or any other classifier metric), then simply average them. This assumes that all labels are equally important, which may not be the case. You can assign a weight to each label.
+
+4.5. Multioutput Classification
+===============================
+
+*Multioutput-multiclass* classification is simply a generaluzation of multilabel classification where each label can be multiclass (i.e., it can have more than 2 possible values). To illustrate this, we can build a system that removes noise from images. Notice that the classifier's output is multilabel (one label per pixel) and each label can have multiple values (pixel intensity ranges from 0 to 255).
