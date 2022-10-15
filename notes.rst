@@ -2,15 +2,15 @@
 1. The Fundamentals
 ===================
 
-What
-====
+1.1. What
+=========
 
 ML is the science of programming computers so they can learn from data.
 
 A computer program is said to learn from experience E with respect to some task T and some perfomance measure P, if its perfomans on T, as measured by P, improves with E.
 
-Why
-====
+1.2. Why
+========
 
 ML is great for:
 
@@ -33,8 +33,8 @@ Examples of applications:
 - Segmenting clients
 - Recommending products
 
-Types
-=====
+1.3. Types
+==========
 
 - By amount and type of supervision they get during training:
   Supervised/Unsupervised/Semisupervised/Reinforcment
@@ -120,8 +120,8 @@ Model-Based Learning
 
 The system builds a model of these examples and then uses that model to make predictions.
 
-Summary So Far
-==============
+1.4. Summary So Far
+===================
 
 1. You studied the data.
 2. You selected a model.
@@ -129,8 +129,8 @@ Summary So Far
    parameter values that minimize a cost function).
 4. You applied the model to make predictions on new cases (inference).
 
-Main Challenges
-===============
+1.5. Main Challenges
+====================
 
 - Data
 
@@ -153,8 +153,8 @@ If you make absolutely no assumption about the data, then there is no reason to 
 2. End-to-End Regression Example
 ================================
 
-Main steps
-==========
+2.1. Main steps
+===============
 
 1. Frame the problem and look at the big picture
 2. Get the data
@@ -165,8 +165,8 @@ Main steps
 7. Present your solution
 8. Launch, monitor, and maintain your system
 
-Frame the Problem
-=================
+2.2. Frame the Problem
+======================
 
 1. Define the objective in business terms
 2. How will your solution be used?
@@ -181,8 +181,8 @@ Frame the Problem
 11. List the assumptions you (and others) have made so far
 12. Verify assumptions if possible
  
-Get the Data
-============
+2.3. Get the Data
+=================
  
 1. Take care of your credentials and access authorizations to get the data
 2. Familiarize yourself with the data scheme
@@ -190,23 +190,23 @@ Get the Data
 4. Visualize attribute distributions if possible
 5. Create a test set as early as possible: avoid data snooping bias.
 
-Create a Test Set
-=================
+2.4. Create a Test Set
+======================
 
 Random methods with fixed seed based on indicies or unique, immutable ids make updating your dataset not trivial.
 
 Stratified sampling by the most valuable feature in the dataset. The feature should not have too many strata, and each stratum should be large enough.
 
-Discover and Visualize the Data
-===============================
+2.5. Discover and Visualize the Data
+====================================
 
 1. Use different scatter plots
 2. Look for linear correlations between attributes using
 4. Zoom in on the distinct correlation plots to see data quirks and anomalies if any
 5. Experiment with feature engineering (combine some attributes) using common sence, then check the correlation agains the new    attributes
 
-Prepare the Data for ML Algorithms
-==================================
+2.6. Prepare the Data for ML Algorithms
+=======================================
 
 1. Separate the predictors and the labels.
 2. Deal with missing values:
@@ -226,8 +226,8 @@ Prepare the Data for ML Algorithms
 
 5. Create a custom transformer to automate both transformation of numerical and categorical attributes.
 
-Select and Train a Model
-========================
+2.7. Select and Train a Model
+=============================
 
 Train a simple model, then evaluate it on the training set. If a typical prediction error on the training set is large, the model underfits the training data. It means that the features do not provide enough information to make good predictions, or that the model is not powerful enough.
 
@@ -247,8 +247,8 @@ To fix overfitting:
 
 Try out many other models from various categories of ML algorithms, without spending too much time tweaking the hyperparameters. The goal is to shortlist 2-5 promissing models.
 
-Fine-Tune Your Model
-====================
+2.8. Fine-Tune Your Model
+=========================
 
 A few things to do
 
@@ -260,8 +260,8 @@ You will often get good insights on the problem by inspecting the best model. Yo
 
 Present your solution to the stake holders. Highlight what you have learned, what worked and what did not, what assumptions were made, and what your system's limitations are.
 
-Launch, Monitor, and Maintain Your System
-=========================================
+2.9. Launch, Monitor, and Maintain Your System
+==============================================
 
 1. Deploy the model to your production environment (website, web service, cloud)
 2. Write monitoring code to check your system's live performance at regular intervals and trigger alerts when it drops
@@ -381,11 +381,11 @@ There are 2 very different ways to train it:
 
 More generally, a linear model makes predictions by simply computing a weighted sum of the input features, plus a constant called the *bias term* (*intersept term*)
 
-`y_pred = THETA_0 + THETA_1*x_1 + THETA_2*x_2 + ... + THETA_n*x_n`
+y_pred = THETA_0 + THETA_1*x_1 + THETA_2*x_2 + ... + THETA_n*x_n
 
 This can be written using a vectorized form  
 
-`y_pred = **THETA** **x**`  
+y_pred = **THETA** **x**
 
 - **THETA** is the model's *parameter vector*, containing the bias term THETA_0 and the feature weights THETA_1 to THETA_n
 - **x** is the instance's *feature vector* from x_1 to x_n, containong x_0 = 1
@@ -393,9 +393,7 @@ This can be written using a vectorized form
 The Normal Equation
 -------------------
 
-`**THETA_BEST** = (**X**.T **X**) ^ -1 **y**`
-
-In this equation  
+**THETA_BEST** = (**X**.T **X**) ^ -1 **y**
 
 - **THETA_BEST** is the value of **THETA** that minimize the cost function
 - **y** is the vector of target values
@@ -409,6 +407,52 @@ The Normal Equation computes the inverse of **X**.T **X**, which is (n + 1)x(n +
 
 Now we will look at a very different way to train a LR model, which is better suited for cases where there are a large number of features or too mane training instances to fit in memory.
 
-Gradient Descent
-----------------
+4.2. Gradient Descent
+=====================
 
+*Gradient Descent* is a generic optimization alogorithm capable of finding optimal solution to a wide range of problems. The general idea of GD is to tweak parameters iteratively in order to minimize a cost function. It measures the local gradient of the error function with regard to the parameter vector **THETA**, and it goes in the direction of descending gradient. The size of a step is determined by a *learning rate* (*eta*) hyperparameter. Once the gradienrt is zero, you have reached a minimum (local or global).  
+
+The MSE cost function for a LR model happens to be a *convex* function. This implies that there are no local minima, just one global minimum. When using GD, you should ensure that all features have a similar scale. Or else it will take much longer to converge.
+
+Batch Gradient Descent
+----------------------
+
+To implement GD, you need to compute the gradient of the cost function with regard to each model parameter *THETA_j*. in other words, you need to calculate how much the cost function will change if you change *THETA_j* just a little bit. This is called a *partial derivative*. The formula involves calculations of the full training srt **X**, at each gradient step. This is why the algorithm is called *Batch GD*: it uses the whole batch of training data at every step.  
+
+As a result it is terribly slow on very large training sets. However, GD scales well with number of features; training a LR model when there are hundreds of thousands of features is much faster using GD than using the Normal Equation or SVD decomposition.
+
+Stochastic Gradient Descent
+---------------------------
+
+Opposite to BGD that uses the whole training set on each step, *Stochastic Gradient Descent* picks a random instance in the training set and computes forward pass and the gradients based only on that single instance. It makes the algorithm mush faster. It also makes possible to train on huge training sets.  
+
+On the other hand, due to its stochastic nature, this algorithm is much less regular than BGD: instead of gentlly decreasing until it reaches the minimum, the cost function will bounce up and down, decreasing only on average. Over time it will end up very close to the minimum, but once it gets there it will continue to bounce around, never settling down. When the cost function is very irregular, this can actually help the algorithm jump out of local minima, so SGD has a better chances of finding the global minimum than BGD does. Randomness is good to escape from local minima, but bad because it means that the algorithm can never settle at the minimum. One solution is to gradually reduce the learning rate according to a *learning schedule*.
+
+Mini-batch Gradient Descent
+---------------------------
+
+*Mini-batch Gradient Descent* computes the gradients on small random sets of instances called *mini-batches*. The performance boost comes from hardware optimization of matrix operations, especially using GPU. The algorithm's progress in parametre space is less erratic than with SGD, especially with fairly large mini-batches.  
+
+*Comparision of algorithms for Linear Regression*
+
++---------------------+---------+---------+---------+---------+---------+
+| Algorithm           | Large m | Large n | Scaling | Hparams | Scikit  |
++=====================+=========+=========+=========+=========+=========+
+| Normal Equation     | Fast    | Slow    | No      | 0       | N/A     |
++---------------------+---------+---------+---------+---------+---------+
+| SVD                 | Fast    | Slow    | No      | 0       | LR      |
++---------------------+---------+---------+---------+---------+---------+
+| Batch GD            | Slow    | Fast    | Yes     | 2       | SGDR    |
++---------------------+---------+---------+---------+---------+---------+
+| Stochastic GD       | Fast    | Fast    | Yes     | >= 2    | SGDR    |
++---------------------+---------+---------+---------+---------+---------+
+| Mini-batch GD       | Fast    | Fast    | Yes     | >= 2    | SGDR    |
++---------------------+---------+---------+---------+---------+---------+
+
+4.3. Polinomial Regression
+==========================
+
+You can use a linear model to fit nonlinear data. A simple way to do it is to add powers of each feature and their combinations up to ceratain degree as new features, then train a linear model on this extended set of features. This technique is called *Polinomial Regression*. So features `a` and `b` with degree 2 become a, ab, b, a^2, b^2.
+
+4.4. Learning Curves
+====================
