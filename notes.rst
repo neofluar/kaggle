@@ -276,7 +276,7 @@ Present your solution to the stake holders. Highlight what you have learned, wha
 3.1. Binary Classification
 ==========================
 
-A good way to evaluate a model is to use cross-validation that can be performed with different scoring strategies.  
+A good way to evaluate a model's generalization performance is to use *cross-validation* that can be performed with different scoring strategies. If a model performs well on the training data but generalizes poorly accordingly to the cross-validation metrics, then your model is overfitting. If it performs poorly on both, then it is underfitting.
 
 Accuracy
 --------
@@ -452,7 +452,33 @@ Mini-batch Gradient Descent
 4.3. Polinomial Regression
 ==========================
 
-You can use a linear model to fit nonlinear data. A simple way to do it is to add powers of each feature and their combinations up to ceratain degree as new features, then train a linear model on this extended set of features. This technique is called *Polinomial Regression*. So features `a` and `b` with degree 2 become a, ab, b, a^2, b^2.
+You can use a linear model to fit nonlinear data. A simple way to do it is to add powers of each feature and their combinations up to ceratain degree as new features, then train a linear model on this extended set of features. This technique is called *Polinomial Regression*. So features *a* and *b* with degree 2 become *a*, *ab*, *b*, *a^2*, *b^2*.
 
 4.4. Learning Curves
 ====================
+
+Early we used cross-validation to get an estimate of a model's generalization performance (under/over-fitting). Another way to tell is to look at the *learning curves*: these are plots of the model's performance on the training set and the validation set as a function of the training set size (or the training iteration).  
+
+If both curves have reached a plateau and they are close and fairly high, the model is underfitting the data. Adding new instances to the training set can not improve errors. You need to use a more complex model or come up with better features.  
+
+If both curves are much lower and there is a clear gap between them, the model is overfitting the data. Adding new instances to the training set would help the validation error reach the training error.  
+
+The Bias/Variance Trade-off
+---------------------------
+
+A model's generalzation errors can be expressed as the sum of 3 errors:
+
+- *Bias* is due to wrong assumptions, such as assuming that the data is linear when it ia actually quadratic. A high-bias model   is most likely to *underfit* the training data
+- *Variance* is due to the model's excessive sensitivity to small variations in the training data. A model with many degrees of   freedom is likely to have high variance and thus *overfit* the training data
+- *Irreducible error* is due to the noiseness of the data itself.The only way to reduce it is to clean up the data
+
+Increasing a model's complexity will typically increase its variance and reduce its bias. And vise versa.
+
+4.5. Regularized Linear Models
+==============================
+
+As we saw earlier, a good way to reduce overfitting is to *regularize* the model (i.e., to constrain it). A simple way to regularize a polynomial model is to reduce the number of polynomial degrees. Foe a linear model, regularization is typically achieved by constraining the weights of the model.
+
+Ridge Regression
+----------------
+
