@@ -477,8 +477,52 @@ Increasing a model's complexity will typically increase its variance and reduce 
 4.5. Regularized Linear Models
 ==============================
 
-As we saw earlier, a good way to reduce overfitting is to *regularize* the model (i.e., to constrain it). A simple way to regularize a polynomial model is to reduce the number of polynomial degrees. Foe a linear model, regularization is typically achieved by constraining the weights of the model.
+As we saw earlier, a good way to reduce overfitting is to *regularize* the model (i.e., to constrain it). A simple way to regularize a polynomial model is to reduce the number of polynomial degrees. For a linear model, regularization is typically achieved by constraining the weights of the model. It is important to scale the data befor performing almost all regularized models.
 
 Ridge Regression
 ----------------
 
+*Ridge Resression* is a regularized version of Linear Regression: a *regularization term* equal to half of the weighted sum of squared weights is added to the cost function: 0.5 * *alpha* * sum(**THETA**)^2, which is 0.5 * *alpha* * L2norm(**THETA**). This forces the algorithm to not only fit the data but also keep the model weights as small as possible. Increasing alpha leads to flatter predictions, thus reducing the model's variance but increasing bias.
+
+Lasso Regression
+----------------
+
+*Lasso Regression* is a regularized version of Linear Regression: a *regularization term* equal to weighted sum of eights: *alpha* * sum(**THETA**), which is *alpha* * L1norm(**THETA**). The Lasso tends to eliminate the weights of the least important features (i.e., set them to 0). In other words, Lasso Regression automatically performs feature selection and outputs a *sparce model*.
+
+Elastic Net
+-----------
+
+*Elastic Net* is a middle ground between Ridge Regression and Lasso Regression. The regularization term is just a mix of their terms, and you can control the mix ratio: *r* * LassoTerm + (1 - *r*) * RidgeTerm.  
+
+It is always preferable to have a little bit of regularization, so generally you should avoid plain Linear Regression. Ridge is a good default, but if you suspect that only a few features are useful, you should prefer Lasso or ElasticNet. In general, Elastic Net is preffered over Lasso when several features are stronglt correlated.
+
+Early Stopping
+--------------
+
+A very different way to regularize iterative learning algorithms such as GD is to stop training as soon as the validation error reaches a mininmum. This is called *early stopping*.
+
+4.6. Logistic Regression
+========================
+
+*Logistic Regression* - a binary classifier with a threshold 0.5 that is commonly used to estimate probability that an instance belongs to a particular class. Just like a Linear Regression model, a Logistic Regression model computes a weighted sum of the input features (plus a bias term) and outputs the *logistic* of this result
+
+``p_pred = sigmoid(*x*.T **THETA**)``
+
+Once the Logistic Regression model has estimated the probability, it can make a binary prediction with 0.5 probability threshold. Notice thet sigmoid(*t*) < 0.5 when *t* < 0, and sigmoid(*t*) >= 0.5 when *t* >= 0, where *t* = *x*.T **THETA**. The score *t* is often called the *logit*. The name comes from the fact that the logit function, defined as logit(*p*) = log(*p* / (1 - *p*)), is the inverse of the logistic function. Indeed, if you compute the logit of the estimated probability *p*, you will find that the result is *t*. The logit is also called the *log-odds*.  
+
+The cost function for a single training instance **x**:   
+
+c(**THETA**) = -log(*p_pred*) if *y* = 1, -log(1 - *p_pred*) if *y* = 0  
+
+The Logistic Regression cost function over all training set:  
+
+J(**THETA**) = -sum(*yi**log*(*p_predi*) + (1 - *yi*)*log*(1 - *p_predi*)) / m  
+
+There is no closed-form equation to compute **THETA_BEST**, but this cost function is convex, so GD is guaranteed to find the global minimum.  
+
+A *descision boundary* is a value of a feature where probability is equal to 50%.
+
+4.7. Softmax Regression
+=======================
+
+*Softmax Regression*, or *Multinomial Logistic Regression* is a multiclass classifier. When given an instance **x**, the Softmax Regression model first computes a score sk(**x**) = **x**.T **THETA_k** for each class *k*, then estimates the probability of each class by applying the *softmax function* to the scores that computes the exponential of every score, then normalizes them. Each class has its own dedicated parameter vector **THETA_k**. The scores are generally colled *logits* or *log-odds*. The Softmax Classifier predicts the class with the highest estimated probability (which is simply the class with the highest score). The cost function is called *cross-entropy*. You can compute the gradient vector for every class, then use GD to find parameter matrix **THETA** that minimizes the cost function. *Descision boundaries* are linear as it is still a linear model.
