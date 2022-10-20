@@ -526,3 +526,20 @@ A *descision boundary* is a value of a feature where probability is equal to 50%
 =======================
 
 *Softmax Regression*, or *Multinomial Logistic Regression* is a multiclass classifier. When given an instance **x**, the Softmax Regression model first computes a score sk(**x**) = **x**.T **THETA_k** for each class *k*, then estimates the probability of each class by applying the *softmax function* to the scores that computes the exponential of every score, then normalizes them. Each class has its own dedicated parameter vector **THETA_k**. The scores are generally colled *logits* or *log-odds*. The Softmax Classifier predicts the class with the highest estimated probability (which is simply the class with the highest score). The cost function is called *cross-entropy*. You can compute the gradient vector for every class, then use GD to find parameter matrix **THETA** that minimizes the cost function. *Descision boundaries* are linear as it is still a linear model.
+
+=========================
+5. Support Vector Machine
+=========================
+
+5.1. Linear SVM Classification
+==============================
+
+If the 2 classes can be separated easily with a straight line (they are *linearly separable*), the descision boundary of an SVM classifier not only separates the 2 classes but also stays as far away from the closest training instances as possible. These instances are called the *support vectors*. This type of classification is called *large margin classification*.  
+
+SVM are sensitive to the feature scales.
+
+Soft Margine Classification
+---------------------------
+
+If we strictly impose that all instances must be of the street and on the right side, this is called *hard margin classification*. It only works if the data is linearly separable, and it is sensitive to outliers. Also it will probably not generalize well. To avoide these issues, use *soft margin classification*: find a good balance between keeping the street as wide as possible and limiting the margin violations. Although margin violations are bad, it's usually better to have a few of them. The model will probably generalize better.
+
