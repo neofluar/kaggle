@@ -543,3 +543,40 @@ Soft Margine Classification
 
 If we strictly impose that all instances must be of the street and on the right side, this is called *hard margin classification*. It only works if the data is linearly separable, and it is sensitive to outliers. Also it will probably not generalize well. To avoide these issues, use *soft margin classification*: find a good balance between keeping the street as wide as possible and limiting the margin violations. Although margin violations are bad, it's usually better to have a few of them. The model will probably generalize better.
 
+5.2. Nonlinear SVM Classification
+=================================
+
+If the dataset is not linearly separable, then one approach is to add more features, such as polinomial features. In some cases this may result in a linearly separable dataset.
+
+Polynomial Kernel
+-----------------
+
+The *kernel trick* makes it possible to get the same result as if you had added many polynomial features, even with very high-degree polinomials, without actually having to add them.
+
+
+Similarity Features
+-------------------
+
+Another technique to tackle nonlinear problems is to add features computed using *similarity function*, which measures how much each instance resembles a particular *landmark*. *Gaussian Radial Basis Function* (RBF) is an example of this function. Landmark can be created at the location of every instance in the dataset.
+
+Selecting a Kernel
+------------------
+
+Always try the linear kernel first, especially if the training set is large.If it is not, you should also try the Gaussian RBF kernel.
+
+Computational Complexity
+------------------------
+
++---------------------+---------+-------------+---------+--------------+
+| Class               | Time    | Out-of-Core | Scaling | Kernel trick |
++=====================+=========+=============+=========+==============+
+| Linear SVC          | O(mn)   | No          | Yes     | No           | 
++---------------------+---------+-------------+---------+--------------+
+| SGDClassifier       | O(mn)   | Yes         | Yes     | No           | 
++---------------------+---------+-------------+---------+--------------+
+| SVC                 | O(m^2n) | No          | Yes     | Yes          | 
++---------------------+---------+-------------+---------+--------------+
+
+5.3. SVM Regression
+===================
+
