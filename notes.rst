@@ -520,12 +520,12 @@ J(**THETA**) = -sum(*yi**log*(*p_predi*) + (1 - *yi*)*log*(1 - *p_predi*)) / m
 
 There is no closed-form equation to compute **THETA_BEST**, but this cost function is convex, so GD is guaranteed to find the global minimum.  
 
-A *descision boundary* is a value of a feature where probability is equal to 50%.
+A *decision boundary* is a value of a feature where probability is equal to 50%.
 
 4.7. Softmax Regression
 =======================
 
-*Softmax Regression*, or *Multinomial Logistic Regression* is a multiclass classifier. When given an instance **x**, the Softmax Regression model first computes a score sk(**x**) = **x**.T **THETA_k** for each class *k*, then estimates the probability of each class by applying the *softmax function* to the scores that computes the exponential of every score, then normalizes them. Each class has its own dedicated parameter vector **THETA_k**. The scores are generally colled *logits* or *log-odds*. The Softmax Classifier predicts the class with the highest estimated probability (which is simply the class with the highest score). The cost function is called *cross-entropy*. You can compute the gradient vector for every class, then use GD to find parameter matrix **THETA** that minimizes the cost function. *Descision boundaries* are linear as it is still a linear model.
+*Softmax Regression*, or *Multinomial Logistic Regression* is a multiclass classifier. When given an instance **x**, the Softmax Regression model first computes a score sk(**x**) = **x**.T **THETA_k** for each class *k*, then estimates the probability of each class by applying the *softmax function* to the scores that computes the exponential of every score, then normalizes them. Each class has its own dedicated parameter vector **THETA_k**. The scores are generally colled *logits* or *log-odds*. The Softmax Classifier predicts the class with the highest estimated probability (which is simply the class with the highest score). The cost function is called *cross-entropy*. You can compute the gradient vector for every class, then use GD to find parameter matrix **THETA** that minimizes the cost function. *Decision boundaries* are linear as it is still a linear model.
 
 =========================
 5. Support Vector Machine
@@ -534,7 +534,7 @@ A *descision boundary* is a value of a feature where probability is equal to 50%
 5.1. Linear SVM Classification
 ==============================
 
-If the 2 classes can be separated easily with a straight line (they are *linearly separable*), the descision boundary of an SVM classifier not only separates the 2 classes but also stays as far away from the closest training instances as possible. These instances are called the *support vectors*. This type of classification is called *large margin classification*.  
+If the 2 classes can be separated easily with a straight line (they are *linearly separable*), the decision boundary of an SVM classifier not only separates the 2 classes but also stays as far away from the closest training instances as possible. These instances are called the *support vectors*. This type of classification is called *large margin classification*.  
 
 SVM are sensitive to the feature scales.
 
@@ -581,3 +581,23 @@ Computational Complexity
 ===================
 
 The SVM algorithm also supports linear and nonlinear regression. It tries to fit as many instances as possible on the street while limiting margin violations.
+
+==================
+6. Decision Trees
+==================
+
+*Decision Trees* are *non-parametric* algorithm, that are simple to interpret, easy to use, versatile.  
+
+The greedy recursive algorithm works by first splitting the training set into 2 subsets using a single feature *k* and its threshold *tk*. it searches for the pair (*k*, *tk*) that produces the purest subsets weighted by their size. It stops recursing once it reaches the maximum depth, or if it cannot find a split that will reduce impurity.  
+
+The training complexity is O(*n* *m* *log*(*m*)), the testing - O(*log*(*m*)).  
+
+Decision Trees manages classification and regression tasks (and find anomalities) and don't require feature scaling or centering.  
+
+Decision Trees make very few assumptions about the training data. If left unconstrained, the tree will adapt itself to the training data most likely overfitting it. Increasing ``min_`` hyperparameters or reducing ``max_`` will regularize the model.  
+
+Disadvantages:
+
+- Sensitive to training set rotation (use PCA to fix)
+- Sensitive to small variations in the training data
+- Stochastic nature
