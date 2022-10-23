@@ -580,3 +580,4 @@ Computational Complexity
 5.3. SVM Regression
 ===================
 
+The SVM algorithm also supports linear and nonlinear regression. It tries to fit as many instances as possible on the street while limiting margin violations.
