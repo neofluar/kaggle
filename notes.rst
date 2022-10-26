@@ -601,3 +601,32 @@ Disadvantages:
 - Sensitive to training set rotation (use PCA to fix)
 - Sensitive to small variations in the training data
 - Stochastic nature
+
+=======================================
+7. Ensemble Learning and Random Forests
+=======================================
+
+If you aggregate the predictions of a group of predictors, you will often get better predictions than with the best individual predictor. A group of predictors is called an *ensemble*. Ensemble methods work best when the predictors are as independent as possible.
+
+7.1. Voting Classifiers
+=======================
+
+One approach can be to train several different classifiers and aggregate the predictions of each classifier to predict the class that gets the most votes. A majority-vote classifier is called a *hard voting* classifier. If all classifiers in the ensemble are able to predict class probabilities, then we can predict the class with the highest class probability, averaged over all the individuals classifiers. This is called *soft voting*.
+
+7.2. Bagging and Pasting
+========================
+
+Another approach is to use the same training algorithm for every predictor in the ensemble and train them on different random subsets of the training set. The typical size of such a subset is equal to the size of the training set. *Bagging* (*bootstrap aggregating*) and *pasting* are methods to select samples for these subsets. Bagging allows sample repetition for each individual algorithm, and pasting doesn't. Generally, the net result is that the ensemble has a similar bias but a lower variance than a single predictor trained in the original training set.
+
+Out-of-Bag Evaluation
+---------------------
+
+With bagging, some instances may be sampled several times for any given predictor, while others may not be sampled at all. This means that a part of the training instances are never used to train a particular predictor. They are called *out-of-bag* instances. We can use them to evaluate the predictor without the need for a validation set. And it is possib;e to evaluate the ensemble itself by averaging out the oob evaluations of each predictor.
+
+7.3. Random Patches and Random Subspaces
+========================================
+
+The `BaggingClassifer` class supports sampling the features as well allowing feature sampling instead of instance sampling. Thus, each predictor in an ensemble will be trained on a random subset of the input features. This way we trade a bit more bias for a lower variance.
+
+7.4. Random Forests
+===================
