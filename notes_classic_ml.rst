@@ -1,5 +1,5 @@
 ===================
-1. The Fundamentals
+1. The ML Landscape
 ===================
 
 1.1. What
@@ -611,22 +611,49 @@ If you aggregate the predictions of a group of predictors, you will often get be
 7.1. Voting Classifiers
 =======================
 
-One approach can be to train several different classifiers and aggregate the predictions of each classifier to predict the class that gets the most votes. A majority-vote classifier is called a *hard voting* classifier. If all classifiers in the ensemble are able to predict class probabilities, then we can predict the class with the highest class probability, averaged over all the individuals classifiers. This is called *soft voting*.
+One approach can be to train several different classifiers and aggregate the predictions of each classifier to predict the class that gets the most votes. A majority-vote classifier is called a *hard voting* classifier. If all classifiers in an ensemble are able to predict class probabilities then we can predict the class with the highest class probability, averaged over all the individuals classifiers. This is called *soft voting*.
 
 7.2. Bagging and Pasting
 ========================
 
-Another approach is to use the same training algorithm for every predictor in the ensemble and train them on different random subsets of the training set. The typical size of such a subset is equal to the size of the training set. *Bagging* (*bootstrap aggregating*) and *pasting* are methods to select samples for these subsets. Bagging allows sample repetition for each individual algorithm, and pasting doesn't. Generally, the net result is that the ensemble has a similar bias but a lower variance than a single predictor trained in the original training set.
+Another approach is to use the same training algorithm for every predictor in an ensemble and train them on different random subsets of the training set. The typical size of such a subset is equal to the size of the training set. *Bagging* (*bootstrap aggregating*) and *pasting* are methods to select samples for these subsets. Bagging allows sample repetition for each individual algorithm, and pasting doesn't. Generally, the net result is that the ensemble has a similar bias but a lower variance than a single predictor trained on the original training set.
 
 Out-of-Bag Evaluation
 ---------------------
 
-With bagging, some instances may be sampled several times for any given predictor, while others may not be sampled at all. This means that a part of the training instances are never used to train a particular predictor. They are called *out-of-bag* instances. We can use them to evaluate the predictor without the need for a validation set. And it is possib;e to evaluate the ensemble itself by averaging out the oob evaluations of each predictor.
+With bagging, some instances may be sampled several times for any given predictor, while others may not be sampled at all. This means that a part of the training instances are never used to train a particular predictor. They are called *out-of-bag* instances. We can use them to evaluate the predictor without the need for a validation set. And it is possible to evaluate the ensemble itself by averaging out the oob evaluations of each predictor.
 
 7.3. Random Patches and Random Subspaces
 ========================================
 
-The `BaggingClassifer` class supports sampling the features as well allowing feature sampling instead of instance sampling. Thus, each predictor in an ensemble will be trained on a random subset of the input features. This way we trade a bit more bias for a lower variance.
+The ``BaggingClassifer`` class supports sampling the features as well. It allows feature sampling instead of instance sampling. Thus, each predictor in an ensemble will be trained on a random subset of the input features. This way we trade a bit more bias for a lower variance.
 
 7.4. Random Forests
 ===================
+
+A *Random Forest* is an ensemble of Decision Trees, generally trained via the bagging method. The Random Forest introduces extra randomness when growing trees; instead of searching for the very best feature when splitting a node, it searches for the best feature among a random subset of features. The Random Forest makes it easy to measure the relative importance of each feature.
+
+7.5. Boosting
+=============
+
+*Boosting* refers to any ensemble method that train predictors sequentially, each trying to correct its predessor.
+
+AdaBoost
+--------
+
+A new predictor can correct its predessor by paying a bit more attention to the training instances that the predessor underfitted, focusing more and more on the hard cases. It adds predictors to the ensemble, gradually making it better by increasing (boosting) the relative weight of misclassified training instances with some learning rate. Once all predictors are trained their predictions have different weights depending on their overall accuracy on the weighted training set.
+
+Gradient Boosting
+-----------------
+
+Instead of tweaking weights of instsnces at every iteration, this method tries to fit the new predictor to the *residual errors* made by its predessor.
+
+7.6. Stacking
+=============
+
+Instead of using trivial functions (such as hard/soft voting) to aggregate predictions of all predictors in an ensemble, we can train a model to perform this aggregation. This special predictor is called a *blender*. To train the blender, a common approach is to use a hold-out set:
+
+- split the training set into 2 subsets
+- use the first subset to train the first-layer predictors
+- use predictors to make prediction for the second subset
+- use these predictions as a input features (and target values from the second subset) to train the blender
